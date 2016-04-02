@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS= -std=c++14 -pedantic -Wall -Wextra -Werror -g
-OBJS= src/main.o src/option_parser.o src/tetravex_generator.o
+OBJS= src/main.o src/option_parser.o src/tetravex_generator.o src/tetravex.o
 EXEC= epivex
 
 all: $(OBJS)
