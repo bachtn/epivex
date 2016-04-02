@@ -26,8 +26,8 @@ Parser::Parser(int argc, char *argv[])
     size_setter();
     output_setter();
     input_setter();
-
-    valid_input_file();
+    if (vm_.count("input"))
+      valid_input_file();
 
     if (vm_.count("help"))
     {
@@ -101,9 +101,8 @@ void Parser::combination_checker(bpo::options_description desc)
 void Parser::valid_input_file()
 {
   std::ifstream input_file(input_);
-  if (input_file)
+  if (!input_file.fail())
   {
-    std::cout << "valid input file " << input_ << "\n";
     input_file.close();
   }
   else
