@@ -25,20 +25,33 @@ void generator(int size, std::string output)
       for (int j = 0; j < size; ++j)
       {
         if (i != 0)
-          mat[i][j][3] = mat[i - 1][j][2];
-        else if (j != 0)
-          mat[i][j][2] = mat[i][j - 1][0];
-        else
         {
+          mat[i][j][2] = mat[i - 1][j][0];
+          if (mat[i][j][0] == -1)
+            mat[i][j][0] = rand() % 10;
+          if (mat[i][j][1] == -1)
+            mat[i][j][1] = rand() % 10;
+          if (mat[i][j][3] == -1)
+            mat[i][j][3] = rand() % 10;
+        }
+        if (j != 0)
+        {
+          mat[i][j][3] = mat[i][j - 1][1];
           if (mat[i][j][0] == -1)
             mat[i][j][0] = rand() % 10;
           if (mat[i][j][1] == -1)
             mat[i][j][1] = rand() % 10;
           if (mat[i][j][2] == -1)
             mat[i][j][2] = rand() % 10;
-          if (mat[i][j][3] == -1)
-            mat[i][j][3] = rand() % 10;
         }
+        if (mat[i][j][0] == -1)
+          mat[i][j][0] = rand() % 10;
+        if (mat[i][j][1] == -1)
+          mat[i][j][1] = rand() % 10;
+        if (mat[i][j][2] == -1)
+          mat[i][j][2] = rand() % 10;
+        if (mat[i][j][3] == -1)
+          mat[i][j][3] = rand() % 10;
       }
     }
     write_to_file(size, output, mat);
