@@ -101,12 +101,6 @@ void Parser::combination_checker(bpo::options_description desc)
 void Parser::valid_input_file()
 {
   std::ifstream input_file(input_);
-  if (!input_file.fail())
-  {
-    input_file.close();
-  }
-  else
-  {
+  if (input_file.fail())
     exit(3);
-  }
 }

@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS= -std=c++14 -pedantic -Wall -Wextra -Werror -g
-OBJS= src/main.o src/option_parser.o
+OBJS= src/main.o src/option_parser.o src/tetravex_generator.o
 EXEC= epivex
 
 all: $(OBJS)
@@ -8,4 +8,4 @@ all: $(OBJS)
 clean:
 	$(RM) $(EXEC) $(OBJS) $(FLOG) $(ARGS)
 check: all
-	@python3.5 tests/bistro_tsuit.py
+	python3.5 tests/ts.py
