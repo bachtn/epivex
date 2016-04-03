@@ -55,14 +55,14 @@ void Parser::output_setter()
   if (vm_.count("output"))
   {
     output_ = vm_["output"].as<std::string>();
-    if (vm_["output"].defaulted())
+    if (!vm_.count("input"))
     {
-      output_ = output_ + ".vex";
-      generator(size_, output_);
-    }
-    else
-    {
-      if (!vm_.count("input"))
+      if (vm_["output"].defaulted())
+      {
+        output_ = output_ + ".vex";
+        generator(size_, output_);
+      }
+      else
         generator(size_, output_);
     }
   }
