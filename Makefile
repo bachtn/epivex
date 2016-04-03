@@ -8,6 +8,6 @@ EXEC= epivex
 all: $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -lboost_program_options -o $(EXEC)
 clean:
-	$(RM) $(EXEC) $(OBJS) $(FLOG) $(ARGS)
+	$(RM) $(EXEC) $(OBJS)
 check: all
 	python3.5 tests/ts.py

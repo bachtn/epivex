@@ -135,7 +135,7 @@ void Parser::valid_file_formating(std::string str)
     while (std::getline(file_in, line) && count_character(line) == 0)
       continue;
     if (count_character(line) != 1)
-      exit(3);
+      exit(4);
     int tetra_size = std::stoi(line);
     std::vector<std::vector<int>> tetra_vect(pow(tetra_size, 2),
       std::vector<int>(4));
@@ -167,10 +167,10 @@ void Parser::valid_file_formating(std::string str)
     }
     input_tetra_.size_set(tetra_size);
     input_tetra_.vect_set(tetra_vect);
+    file_in.close();
   }
   else
     exit(3);
-  file_in.close();
 }
 
 int Parser::count_character(std::string line)
