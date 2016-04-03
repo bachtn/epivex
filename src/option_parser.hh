@@ -7,6 +7,8 @@
 #include <cmath>
 #include <string>
 #include "tetravex.hh"
+#include "tetravex_generator.hh"
+#include "bdd.hh"
 
 namespace bpo = boost::program_options;
 class Parser
@@ -19,10 +21,11 @@ class Parser
       int size_get();
       std::string output_get();
       std::string input_get();
+      Tetravex& input_tetra_get();
       void print_values();
       void combination_checker(bpo::options_description desc);
       void valid_input_file();
-      void valid_file_formating();
+      void valid_file_formating(std::string str);
       int count_character(std::string line);
     private:
       bpo::options_description desc_;

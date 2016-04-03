@@ -29,15 +29,17 @@ Parser::Parser(int argc, char *argv[])
     if (vm_.count("input"))
     {
       valid_input_file();
-      valid_file_formating();
+      valid_file_formating(input_);
+      if (!vm_.count("output"))
+        solver(input_tetra_, input_);
+      else
+        solver(input_tetra_, output_);
     }
 
     if (vm_.count("help"))
     {
       std::cout << desc_ << "\n";
     }
-
-    print_values();
 }
 
 void Parser::size_setter()
@@ -54,7 +56,15 @@ void Parser::output_setter()
   {
     output_ = vm_["output"].as<std::string>();
     if (vm_["output"].defaulted())
+    {
       output_ = output_ + ".vex";
+      generator(size_, output_);
+    }
+    else
+    {
+      if (!vm_.count("input"))
+        generator(size_, output_);
+    }
   }
 }
 
@@ -78,6 +88,11 @@ std::string Parser::output_get()
 std::string Parser::input_get()
 {
   return input_;
+}
+
+Tetravex& Parser::input_tetra_get()
+{
+  return input_tetra_;
 }
 
 void  Parser::print_values()
@@ -110,10 +125,10 @@ void Parser::valid_input_file()
     exit(3);
 }
 
-void Parser::valid_file_formating()
+void Parser::valid_file_formating(std::string str)
 {
   std::ifstream file_in;
-  file_in.open(input_);
+  file_in.open(str);
   std::string line;
   if (file_in.is_open())
   {
@@ -152,9 +167,6 @@ void Parser::valid_file_formating()
     }
     input_tetra_.size_set(tetra_size);
     input_tetra_.vect_set(tetra_vect);
-    for (int i = 0; i < pow(tetra_size, 2); ++i)
-      for (int j = 0; j < 4; ++j)
-        std::cout << tetra_vect[i][j] << " ";
   }
   else
     exit(3);
