@@ -23,6 +23,8 @@ void solver(Tetravex tetra, std::string output)
     size * size);
   // push the node in the matrix
   tl.node_queue.push(first_node);
+  // name of the output file
+  std::string out_file = output + "_sol";
   /************** Start treatment ***************/
   while (tl.node_queue.size() != 0)
   {
@@ -36,22 +38,13 @@ void solver(Tetravex tetra, std::string output)
     {
       if (mat_is_valid(mat, size, &tl))
       {
-        write_to_file_sol(size, output + "_sol_" + std::to_string(sol) + ".vex",
+        write_to_file_sol(size, out_file + "_" + std::to_string(sol) + ".vex",
           mat, &tl);
         sol++;
-        std::cout << "valid node\n";
       }
-      else
-        std::cout << "invalid node\n";
     }
     else
     {
-      for (int i = 0; i < size; ++i)
-      {
-        for (int j = 0; j < size; ++j)
-          std::cout << mat[i][j] << " ";
-        std::cout << "\n";
-      }
       cursor = node.cursor_get();
       curs_vect = node.curs_vect_get();
       int tile_nbr = node.tile_nbr_get();
@@ -64,7 +57,6 @@ void solver(Tetravex tetra, std::string output)
           right_curs_vect, size);
         Node right_node(mat, right_curs_vect, right_cursor, tile_nbr, empty,
                         tag - 1);
-        //std::cout << "right node\n";
         tl.node_queue.push(right_node);
       }
 
@@ -93,6 +85,20 @@ void solver(Tetravex tetra, std::string output)
   }
   if (sol == 0)
     exit(1);
+  else if (sol == 1)
+  {
+    std::string tmp1 = out_file + "_" + std::to_string(0) + ".vex";
+    char *writable1 = new char[tmp1.size() + 1];
+    std::copy(tmp1.begin(), tmp1.end(), writable1);
+    writable1[tmp1.size()] = '\0';
+    std::string tmp2 = out_file + ".vex";
+    char *writable2 = new char[tmp2.size() + 1];
+    std::copy(tmp2.begin(), tmp2.end(), writable2);
+    writable2[tmp2.size()] = '\0';
+    std::rename(writable1, writable2);
+    delete[] writable1;
+    delete[] writable2;
+  }
 }
 
 std::pair<int, int> cursor_manager(bool insert, std::pair<int, int> cursor,
@@ -155,6 +161,16 @@ bool mat_is_valid(vect_2_int mat, int size, struct tool *tl)
       if (j != 0 && mat[i][j] != -1 && mat[i][j - 1] != -1)
       {
         if (get_tile(mat[i][j], tl)[3] != get_tile(mat[i][j - 1], tl)[1])
+          return false;
+      }
+      if (i != size - 1 && mat[i][j] != -1 && mat[i + 1][j] != -1)
+      {
+        if (get_tile(mat[i][j], tl)[0] != get_tile(mat[i + 1][j], tl)[2])
+          return false;
+      }
+      if (j != size - 1 && mat[i][j] != -1 && mat[i][j + 1] != -1)
+      {
+        if (get_tile(mat[i][j], tl)[1] != get_tile(mat[i][j + 1], tl)[3])
           return false;
       }
     }
