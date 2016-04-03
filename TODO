@@ -1,5 +1,2 @@
 ****************************** TODO ************************************
-* Threshold 1
-** Manage the case of -i and -o combined: the file name
-* Threshold 2
-* Threshold 3
+Optimise resolution algorithm: use smart pointers?
